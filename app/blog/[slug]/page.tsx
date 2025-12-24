@@ -4,6 +4,7 @@ import { PostHeader } from "@/components/blog/post-header";
 import { TableOfContents } from "@/components/blog/table-of-contents";
 import { ShareButtons } from "@/components/blog/share-buttons";
 import { getAllPostSlugs, getPostBySlug } from "@/lib/blog";
+import { renderMDX } from "@/lib/mdx";
 import { siteConfig } from "@/lib/config";
 
 interface BlogPostPageProps {
@@ -74,8 +75,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 		notFound();
 	}
 
-	// Dynamic import of the MDX file
-	const { default: PostContent } = await import(`@/content/blog/${slug}.mdx`);
+	// Render MDX content with syntax highlighting
+	const content = await renderMDX(post.content);
 
 	const postUrl = `${siteConfig.url}/blog/${slug}`;
 
@@ -125,7 +126,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
 						{/* Article content */}
 						<article className="prose prose-neutral dark:prose-invert max-w-none prose-headings:scroll-mt-20 prose-a:text-primary prose-pre:bg-transparent prose-pre:p-0">
-							<PostContent />
+							{content}
 						</article>
 
 						{/* Post footer */}

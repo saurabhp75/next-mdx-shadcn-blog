@@ -1,21 +1,34 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, isValidElement, Children } from "react";
 import { Check, Copy, Terminal } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface CodeBlockProps {
 	children: React.ReactNode;
 	className?: string;
+	"data-language"?: string;
+	"data-theme"?: string;
 }
 
-export function CodeBlock({ children, className }: CodeBlockProps) {
+export function CodeBlock({
+	children,
+	className,
+	"data-language": dataLanguage,
+	...props
+}: CodeBlockProps) {
 	const [copied, setCopied] = useState(false);
 	const [language, setLanguage] = useState<string>("");
 	const preRef = useRef<HTMLPreElement>(null);
 
 	useEffect(() => {
-		// Extract language from code element's className
+		// Try to get language from data attribute first (from rehype-pretty-code)
+		if (dataLanguage) {
+			setLanguage(dataLanguage);
+			return;
+		}
+
+		// Fallback: Extract language from code element's className
 		if (preRef.current) {
 			const codeElement = preRef.current.querySelector("code");
 			if (codeElement) {
@@ -25,7 +38,7 @@ export function CodeBlock({ children, className }: CodeBlockProps) {
 				}
 			}
 		}
-	}, [children]);
+	}, [children, dataLanguage]);
 
 	const copyToClipboard = async () => {
 		if (preRef.current) {
@@ -41,6 +54,13 @@ export function CodeBlock({ children, className }: CodeBlockProps) {
 			}
 		}
 	};
+
+	// Check if this is rehype-pretty-code output (has data-theme attribute)
+	const isRehypePrettyCode = Boolean(
+		props["data-theme"] ||
+			(isValidElement(children) &&
+				(children.props as Record<string, unknown>)?.["data-theme"]),
+	);
 
 	return (
 		<div className="group relative my-6 overflow-hidden rounded-lg border border-border bg-muted/50">
@@ -90,8 +110,11 @@ export function CodeBlock({ children, className }: CodeBlockProps) {
 				className={cn(
 					"overflow-x-auto p-4 text-sm leading-relaxed",
 					"[&>code]:block [&>code]:bg-transparent [&>code]:p-0",
+					"[&_[data-line]]:px-0",
+					isRehypePrettyCode && "bg-transparent border-0",
 					className,
 				)}
+				{...props}
 			>
 				{children}
 			</pre>

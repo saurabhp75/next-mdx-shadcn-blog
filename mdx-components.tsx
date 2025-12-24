@@ -26,23 +26,55 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 		// Images
 		img: MDXImage,
 
-		// Code blocks
-		pre: ({ children, ...props }) => (
-			<CodeBlock {...props}>{children}</CodeBlock>
-		),
+		// Code blocks - handle rehype-pretty-code figure wrapper
+		figure: ({ children, ...props }) => {
+			// Check if this is a rehype-pretty-code figure
+			if (
+				(props as Record<string, unknown>)["data-rehype-pretty-code-figure"] !==
+				undefined
+			) {
+				return <figure {...props}>{children}</figure>;
+			}
+			return <figure {...props}>{children}</figure>;
+		},
+
+		// Code blocks with syntax highlighting
+		pre: ({ children, ...props }) => {
+			// Extract data-language from the code child if present
+			const codeChild = children as React.ReactElement<{
+				"data-language"?: string;
+				"data-theme"?: string;
+			}>;
+			const dataLanguage =
+				codeChild?.props?.["data-language"] ||
+				(props as Record<string, unknown>)["data-language"];
+
+			return (
+				<CodeBlock data-language={dataLanguage as string} {...props}>
+					{children}
+				</CodeBlock>
+			);
+		},
 
 		// Inline code
 		code: ({ children, ...props }) => {
 			// Check if this is inside a pre (code block) - handled by CodeBlock component
-			const isInlineCode = !props.className?.includes("language-");
-			if (isInlineCode && typeof children === "string") {
-				return (
-					<code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
-						{children}
-					</code>
-				);
+			// rehype-pretty-code adds data-theme to code blocks
+			const hasDataTheme = (props as Record<string, unknown>)["data-theme"];
+			const hasLanguageClass = (props as Record<string, unknown>).className
+				?.toString()
+				.includes("language-");
+
+			if (hasDataTheme || hasLanguageClass) {
+				return <code {...props}>{children}</code>;
 			}
-			return <code {...props}>{children}</code>;
+
+			// Inline code styling
+			return (
+				<code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+					{children}
+				</code>
+			);
 		},
 
 		// Blockquote
