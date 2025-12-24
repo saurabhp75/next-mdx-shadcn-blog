@@ -1,0 +1,140 @@
+---
+title: "Building a Modern Blog with Next.js and MDX"
+description: "A comprehensive guide to creating a performant, SEO-optimized blog using Next.js 15, native MDX integration, and modern web development practices."
+date: "2025-12-25"
+author: "Saurabh Prakash"
+image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&h=630&fit=crop"
+tags:
+  - Next.js
+  - MDX
+  - React
+  - Web Development
+category: "Web Development"
+published: true
+---
+
+Welcome to **code & context**! In this inaugural post, I'll walk you through the process of building a modern, production-ready blog using Next.js 15 and native MDX integration.
+
+## Why Next.js and MDX?
+
+The combination of Next.js and MDX provides an incredibly powerful platform for technical blogging:
+
+- **Server Components** - Better performance and smaller bundle sizes
+- **Static Generation** - Lightning-fast page loads
+- **MDX Support** - Write content in Markdown with React components
+- **SEO Optimization** - Built-in metadata API for search engines
+
+## Getting Started
+
+First, let's set up our project with the necessary dependencies:
+
+```bash
+npm install @next/mdx @mdx-js/loader @mdx-js/react @types/mdx
+```
+
+Then, configure your `next.config.ts`:
+
+```typescript
+import createMDX from "@next/mdx";
+
+const nextConfig = {
+  pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
+};
+
+const withMDX = createMDX({
+  options: {
+    remarkPlugins: [],
+    rehypePlugins: [],
+  },
+});
+
+export default withMDX(nextConfig);
+```
+
+## Custom MDX Components
+
+One of the best features of MDX is the ability to use custom React components:
+
+```tsx
+// mdx-components.tsx
+import type { MDXComponents } from "mdx/types";
+
+export function useMDXComponents(components: MDXComponents): MDXComponents {
+  return {
+    h1: ({ children }) => (
+      <h1 className="text-4xl font-bold">{children}</h1>
+    ),
+    code: ({ children }) => (
+      <code className="bg-muted px-2 py-1 rounded">{children}</code>
+    ),
+    ...components,
+  };
+}
+```
+
+<Callout type="tip" title="Pro Tip">
+  You can create custom callout components like this one to highlight important
+  information in your posts!
+</Callout>
+
+## Code Syntax Highlighting
+
+Proper syntax highlighting is crucial for a technical blog. Here's an example of a React component with full syntax highlighting:
+
+```tsx
+interface ButtonProps {
+  variant?: "primary" | "secondary";
+  children: React.ReactNode;
+  onClick?: () => void;
+}
+
+export function Button({ variant = "primary", children, onClick }: ButtonProps) {
+  return (
+    <button
+      className={cn(
+        "px-4 py-2 rounded-md font-medium transition-colors",
+        variant === "primary"
+          ? "bg-primary text-primary-foreground hover:bg-primary/90"
+          : "bg-secondary text-secondary-foreground hover:bg-secondary/90"
+      )}
+      onClick={onClick}
+    >
+      {children}
+    </button>
+  );
+}
+```
+
+## Performance Considerations
+
+When building a blog, performance should be a top priority:
+
+1. **Static Generation** - Pre-render pages at build time
+2. **Image Optimization** - Use Next.js Image component
+3. **Code Splitting** - Only load what's needed
+4. **Caching** - Leverage browser and CDN caching
+
+## SEO Best Practices
+
+Here's a quick checklist for SEO optimization:
+
+| Feature | Implementation |
+|---------|----------------|
+| Meta tags | Use Next.js Metadata API |
+| Sitemap | Generate automatically with `sitemap.ts` |
+| Robots.txt | Configure crawler access |
+| Structured Data | Add JSON-LD for articles |
+| Open Graph | Social media previews |
+
+## Conclusion
+
+Building a modern blog with Next.js and MDX gives you the best of both worlds: the simplicity of Markdown for content creation and the power of React for interactive components.
+
+In future posts, I'll dive deeper into specific topics like:
+
+- Advanced MDX patterns
+- SEO optimization strategies
+- Performance tuning
+- AI/LLM crawler optimization
+
+Stay tuned and happy coding! 🚀

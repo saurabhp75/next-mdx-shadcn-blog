@@ -1,0 +1,231 @@
+---
+title: "The Art of Writing Clean Code"
+description: "Principles and practices for writing code that is readable, maintainable, and stands the test of time. A guide for developers who care about craft."
+date: "2025-12-22"
+author: "Saurabh Prakash"
+image: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=1200&h=630&fit=crop"
+tags:
+  - Clean Code
+  - Best Practices
+  - Programming
+  - Software Engineering
+category: "Programming"
+published: true
+---
+
+Writing code is easy. Writing *clean* code is an art. Let's explore the principles that separate good code from great code.
+
+## Why Clean Code Matters
+
+> "Any fool can write code that a computer can understand. Good programmers write code that humans can understand." – Martin Fowler
+
+Clean code:
+
+- **Reduces bugs** - Clear code has fewer hiding places for bugs
+- **Speeds up development** - Easy to understand = easy to modify
+- **Improves collaboration** - Team members can contribute effectively
+- **Saves money** - Less time debugging and maintaining
+
+## Meaningful Names
+
+Names should reveal intent:
+
+```typescript
+// ❌ Bad
+const d = 86400;
+const arr = users.filter(u => u.a > 18);
+
+// ✅ Good
+const SECONDS_IN_DAY = 86400;
+const adultUsers = users.filter(user => user.age > 18);
+```
+
+<Callout type="tip">
+  If you need a comment to explain a variable name, the name isn't good enough.
+</Callout>
+
+## Functions Should Do One Thing
+
+The Single Responsibility Principle applies to functions too:
+
+```typescript
+// ❌ Bad - does too many things
+function processUserData(user) {
+  validateUser(user);
+  saveToDatabase(user);
+  sendWelcomeEmail(user);
+  updateAnalytics(user);
+  generateReport(user);
+}
+
+// ✅ Good - single responsibility
+async function registerNewUser(userData: UserData): Promise<User> {
+  const validatedData = validateUserData(userData);
+  const user = await createUser(validatedData);
+  await notifyUserCreation(user);
+  return user;
+}
+```
+
+## Keep Functions Small
+
+Functions should be small, focused, and easy to understand:
+
+```typescript
+// ❌ Bad - too long and complex
+function calculateOrderTotal(order) {
+  let subtotal = 0;
+  for (const item of order.items) {
+    subtotal += item.price * item.quantity;
+  }
+  
+  let discount = 0;
+  if (order.coupon) {
+    if (order.coupon.type === 'percentage') {
+      discount = subtotal * (order.coupon.value / 100);
+    } else if (order.coupon.type === 'fixed') {
+      discount = order.coupon.value;
+    }
+  }
+  
+  const taxRate = order.region === 'US' ? 0.08 : 0.2;
+  const tax = (subtotal - discount) * taxRate;
+  
+  return subtotal - discount + tax;
+}
+
+// ✅ Good - composed of small functions
+function calculateOrderTotal(order: Order): number {
+  const subtotal = calculateSubtotal(order.items);
+  const discount = calculateDiscount(subtotal, order.coupon);
+  const tax = calculateTax(subtotal - discount, order.region);
+  return subtotal - discount + tax;
+}
+
+function calculateSubtotal(items: OrderItem[]): number {
+  return items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+}
+
+function calculateDiscount(subtotal: number, coupon?: Coupon): number {
+  if (!coupon) return 0;
+  return coupon.type === 'percentage'
+    ? subtotal * (coupon.value / 100)
+    : coupon.value;
+}
+
+function calculateTax(amount: number, region: string): number {
+  const taxRate = TAX_RATES[region] ?? DEFAULT_TAX_RATE;
+  return amount * taxRate;
+}
+```
+
+## Avoid Magic Numbers
+
+Replace magic numbers with named constants:
+
+```typescript
+// ❌ Bad
+if (password.length < 8) {
+  throw new Error('Password too short');
+}
+
+if (attempts > 3) {
+  lockAccount();
+}
+
+// ✅ Good
+const MIN_PASSWORD_LENGTH = 8;
+const MAX_LOGIN_ATTEMPTS = 3;
+
+if (password.length < MIN_PASSWORD_LENGTH) {
+  throw new Error(`Password must be at least ${MIN_PASSWORD_LENGTH} characters`);
+}
+
+if (attempts > MAX_LOGIN_ATTEMPTS) {
+  lockAccount();
+}
+```
+
+## Handle Errors Gracefully
+
+Don't ignore errors; handle them appropriately:
+
+```typescript
+// ❌ Bad
+try {
+  const user = await fetchUser(id);
+  return user;
+} catch (e) {
+  console.log(e);
+  return null;
+}
+
+// ✅ Good
+async function getUser(id: string): Promise<User> {
+  try {
+    const user = await fetchUser(id);
+    return user;
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      throw new UserNotFoundError(`User ${id} not found`);
+    }
+    logger.error('Failed to fetch user', { id, error });
+    throw new ServiceError('Unable to retrieve user');
+  }
+}
+```
+
+## Write Self-Documenting Code
+
+Comments should explain *why*, not *what*:
+
+```typescript
+// ❌ Bad - comment explains what the code does
+// Loop through users and filter adults
+const adults = users.filter(u => u.age >= 18);
+
+// ✅ Good - code is self-explanatory
+const adults = users.filter(user => user.isAdult());
+
+// ✅ Good - comment explains why
+// We need to sort by creation date because the external API
+// returns results in an undefined order
+const sortedItems = items.sort((a, b) => 
+  a.createdAt.getTime() - b.createdAt.getTime()
+);
+```
+
+## The Boy Scout Rule
+
+> "Leave the code cleaner than you found it."
+
+Every time you touch code:
+
+1. Fix minor issues you notice
+2. Rename unclear variables
+3. Extract complex logic into functions
+4. Add missing type annotations
+5. Remove dead code
+
+## Code Smells to Watch For
+
+| Smell | Description | Solution |
+|-------|-------------|----------|
+| Long functions | > 20 lines | Extract smaller functions |
+| Deep nesting | > 3 levels | Early returns, extract logic |
+| Long parameter lists | > 3 params | Use objects |
+| Duplicate code | Copy-paste | Extract shared function |
+| Comments | Explaining what | Improve naming |
+
+## Conclusion
+
+Clean code is a practice, not a destination. It requires:
+
+- **Discipline** - Resist the temptation to "just make it work"
+- **Refactoring** - Continuously improve existing code
+- **Code reviews** - Learn from others and share knowledge
+- **Humility** - Your first draft is never the best
+
+Remember: code is read more often than it's written. Invest in readability.
+
+Write code that your future self will thank you for. ✨

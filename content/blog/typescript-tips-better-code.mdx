@@ -1,0 +1,177 @@
+---
+title: "TypeScript Tips for Better Code"
+description: "Practical TypeScript tips and patterns to write cleaner, safer, and more maintainable code."
+date: "2025-12-15"
+author: "Saurabh Prakash"
+image: "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=1200&h=630&fit=crop"
+tags: ["TypeScript", "JavaScript", "Programming", "Best Practices"]
+category: "Programming"
+published: true
+---
+
+TypeScript has become the standard for building large-scale JavaScript applications. Here are some tips to level up your TypeScript skills.
+
+## 1. Use Discriminated Unions
+
+Discriminated unions make it easy to handle different cases in a type-safe way:
+
+```typescript
+type Result<T> = 
+  | { success: true; data: T }
+  | { success: false; error: string };
+
+function handleResult<T>(result: Result<T>) {
+  if (result.success) {
+    // TypeScript knows result.data exists here
+    console.log(result.data);
+  } else {
+    // TypeScript knows result.error exists here
+    console.error(result.error);
+  }
+}
+```
+
+## 2. Leverage Template Literal Types
+
+Create precise string types with template literals:
+
+```typescript
+type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
+type APIRoute = `/api/${string}`;
+type HTTPRoute = `${HTTPMethod} ${APIRoute}`;
+
+// Valid: "GET /api/users"
+// Invalid: "PATCH /api/users"
+const route: HTTPRoute = "GET /api/users";
+```
+
+<Callout type="tip">
+Template literal types are incredibly powerful for API design, CSS-in-JS, and configuration objects.
+</Callout>
+
+## 3. Use `satisfies` for Better Inference
+
+The `satisfies` operator validates a type while preserving the narrower inferred type:
+
+```typescript
+type Config = {
+  theme: 'light' | 'dark';
+  features: string[];
+};
+
+// Without satisfies - type is Config
+const config1: Config = {
+  theme: 'dark',
+  features: ['search', 'notifications'],
+};
+
+// With satisfies - type is narrower
+const config2 = {
+  theme: 'dark',
+  features: ['search', 'notifications'],
+} satisfies Config;
+
+// config2.theme is typed as 'dark', not 'light' | 'dark'
+```
+
+## 4. Extract Component Props
+
+Clean way to extract and extend component props:
+
+```typescript
+import { ComponentProps } from 'react';
+
+// Extract props from a component
+type ButtonProps = ComponentProps<'button'>;
+
+// Extend with custom props
+interface CustomButtonProps extends ButtonProps {
+  variant: 'primary' | 'secondary';
+  isLoading?: boolean;
+}
+
+function Button({ variant, isLoading, ...props }: CustomButtonProps) {
+  return <button {...props} />;
+}
+```
+
+## 5. Use `const` Assertions
+
+Make objects and arrays immutable with const assertions:
+
+```typescript
+// Without const assertion
+const routes = ['/', '/about', '/blog'];
+// type: string[]
+
+// With const assertion
+const routes = ['/', '/about', '/blog'] as const;
+// type: readonly ['/', '/about', '/blog']
+
+// Great for creating union types
+type Route = typeof routes[number];
+// type: '/' | '/about' | '/blog'
+```
+
+<Callout type="info" title="Pro Tip">
+Combine `as const` with object values to create exhaustive type guards.
+</Callout>
+
+## 6. Branded Types for Safety
+
+Create distinct types for values that are structurally the same:
+
+```typescript
+type UserId = string & { readonly brand: unique symbol };
+type OrderId = string & { readonly brand: unique symbol };
+
+function createUserId(id: string): UserId {
+  return id as UserId;
+}
+
+function createOrderId(id: string): OrderId {
+  return id as OrderId;
+}
+
+function getUser(id: UserId) { /* ... */ }
+function getOrder(id: OrderId) { /* ... */ }
+
+const userId = createUserId('user-123');
+const orderId = createOrderId('order-456');
+
+getUser(userId);  // ✓ Works
+getUser(orderId); // ✗ Error - can't pass OrderId to UserId
+```
+
+## 7. Utility Types You Should Know
+
+```typescript
+// Partial - make all properties optional
+type PartialUser = Partial<User>;
+
+// Required - make all properties required
+type RequiredConfig = Required<Config>;
+
+// Pick - select specific properties
+type UserPreview = Pick<User, 'name' | 'avatar'>;
+
+// Omit - exclude specific properties
+type UserWithoutPassword = Omit<User, 'password'>;
+
+// Record - create an object type with keys and values
+type UserRoles = Record<UserId, Role>;
+
+// ReturnType - extract function return type
+type ApiResponse = ReturnType<typeof fetchUser>;
+
+// Parameters - extract function parameters
+type FetchParams = Parameters<typeof fetchUser>;
+```
+
+## Conclusion
+
+These patterns will help you write more type-safe and maintainable TypeScript code. Start incorporating them into your projects and you'll see immediate benefits in code quality and developer experience.
+
+---
+
+*Have a favorite TypeScript tip? Share it with me on [GitHub](https://github.com/saurabhp75)!*

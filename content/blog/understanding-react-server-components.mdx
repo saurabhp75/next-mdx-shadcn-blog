@@ -1,0 +1,178 @@
+---
+title: "Understanding React Server Components in 2025"
+description: "A deep dive into React Server Components, how they work, and best practices for using them effectively in your Next.js applications."
+date: "2025-12-24"
+author: "Saurabh Prakash"
+image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=1200&h=630&fit=crop"
+tags:
+  - React
+  - Server Components
+  - Next.js
+  - Performance
+category: "Web Development"
+published: true
+---
+
+React Server Components (RSC) have fundamentally changed how we build React applications. Let's explore what they are and how to use them effectively.
+
+## What Are Server Components?
+
+Server Components are React components that render exclusively on the server. They never ship JavaScript to the client, resulting in:
+
+- **Smaller bundles** - No component code sent to the browser
+- **Direct database access** - Query databases without API layers
+- **Better performance** - Less JavaScript to parse and execute
+
+```tsx
+// This component runs only on the server
+async function BlogPosts() {
+  // Direct database access - no API needed!
+  const posts = await db.query('SELECT * FROM posts');
+  
+  return (
+    <ul>
+      {posts.map(post => (
+        <li key={post.id}>{post.title}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+<Callout type="info" title="Key Insight">
+  In Next.js App Router, all components are Server Components by default. You
+  only need to add "use client" when you need interactivity.
+</Callout>
+
+## Server vs Client Components
+
+Understanding when to use each type is crucial:
+
+### Use Server Components When:
+
+- Fetching data
+- Accessing backend resources directly
+- Keeping sensitive information on the server
+- Rendering static content
+
+### Use Client Components When:
+
+- Adding interactivity (onClick, onChange)
+- Using browser APIs
+- Managing component state
+- Using effects (useEffect)
+
+## The "use client" Directive
+
+To create a Client Component, add the "use client" directive at the top:
+
+```tsx
+"use client";
+
+import { useState } from "react";
+
+export function Counter() {
+  const [count, setCount] = useState(0);
+  
+  return (
+    <button onClick={() => setCount(c => c + 1)}>
+      Count: {count}
+    </button>
+  );
+}
+```
+
+## Composition Patterns
+
+The real power comes from composing Server and Client Components:
+
+```tsx
+// page.tsx (Server Component)
+import { Counter } from "./counter"; // Client Component
+import { BlogPosts } from "./blog-posts"; // Server Component
+
+export default async function Page() {
+  return (
+    <div>
+      {/* Server Component - fetches data */}
+      <BlogPosts />
+      
+      {/* Client Component - handles interaction */}
+      <Counter />
+    </div>
+  );
+}
+```
+
+<Callout type="warning" title="Important">
+  You cannot import a Server Component into a Client Component. The boundary
+  goes one way!
+</Callout>
+
+## Data Fetching Patterns
+
+Server Components shine when fetching data:
+
+```tsx
+// Parallel data fetching
+async function Dashboard() {
+  // These run in parallel!
+  const [user, posts, analytics] = await Promise.all([
+    getUser(),
+    getPosts(),
+    getAnalytics(),
+  ]);
+  
+  return (
+    <div>
+      <UserProfile user={user} />
+      <PostsList posts={posts} />
+      <AnalyticsChart data={analytics} />
+    </div>
+  );
+}
+```
+
+## Streaming and Suspense
+
+Combine Server Components with Suspense for progressive rendering:
+
+```tsx
+import { Suspense } from "react";
+
+export default function Page() {
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      
+      <Suspense fallback={<LoadingSpinner />}>
+        <SlowDataComponent />
+      </Suspense>
+    </div>
+  );
+}
+```
+
+## Performance Benefits
+
+Here's a comparison of bundle sizes:
+
+| Approach | JavaScript Sent | Initial Load |
+|----------|----------------|--------------|
+| Traditional SPA | 150-500KB | 2-4s |
+| SSR + Hydration | 100-300KB | 1.5-3s |
+| Server Components | 30-100KB | 0.5-1.5s |
+
+## Best Practices
+
+1. **Default to Server Components** - Start with RSC, add "use client" only when needed
+2. **Push client boundaries down** - Keep interactive parts as small as possible
+3. **Colocate data fetching** - Fetch data where it's used
+4. **Use streaming** - Don't block on slow data
+5. **Cache appropriately** - Use Next.js caching strategies
+
+## Conclusion
+
+React Server Components represent a paradigm shift in how we build React applications. By understanding the boundaries between server and client, you can build faster, more efficient applications.
+
+The future of React is on the server, and that's a good thing! 🚀
