@@ -151,7 +151,7 @@
   }
   
   .prose code:not(pre code) {
-    @apply bg-muted px-1.5 py-0.5 rounded text-sm font-mono;
+    @apply bg-muted px-1.5 py-0.5 rounded-none text-sm font-mono;
   }
   
   .prose pre {
@@ -171,7 +171,7 @@
   }
   
   .prose img {
-    @apply rounded-lg border border-border;
+    @apply rounded-none border border-border;
   }
   
   .prose table {

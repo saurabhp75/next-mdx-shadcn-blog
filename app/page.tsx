@@ -29,7 +29,7 @@ export default function HomePage() {
 				<div className="container relative max-w-screen-xl px-4 md:px-8 py-20 md:py-32">
 					<div className="max-w-3xl space-y-8">
 						{/* Badge */}
-						<div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-background/50 backdrop-blur-sm">
+						<div className="inline-flex items-center gap-2 px-3 py-1 rounded-none border border-border bg-background/50 backdrop-blur-sm">
 							<Sparkles className="h-3.5 w-3.5 text-primary" />
 							<span className="text-sm text-muted-foreground">
 								Technical Blog & Personal Reflections
@@ -114,13 +114,13 @@ export default function HomePage() {
 				{recentPosts.length > 0 ? (
 					<PostGrid posts={recentPosts} showFeatured />
 				) : (
-					<div className="text-center py-16 border border-dashed border-border rounded-lg">
+					<div className="text-center py-16 border border-dashed border-border rounded-none">
 						<p className="text-muted-foreground mb-4">
 							No posts yet. Check back soon!
 						</p>
 						<p className="text-sm text-muted-foreground">
 							Add MDX files to{" "}
-							<code className="bg-muted px-2 py-1 rounded">content/blog/</code>{" "}
+							<code className="bg-muted px-2 py-1 rounded-none">content/blog/</code>{" "}
 							to get started.
 						</p>
 					</div>
