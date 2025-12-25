@@ -4,7 +4,11 @@ import { TableOfContents } from "@/components/blog/table-of-contents";
 import { ShareButtons } from "@/components/blog/share-buttons";
 import { getAllPostSlugs, getPostBySlug } from "@/lib/blog";
 import { renderMDX } from "@/lib/mdx";
-import { buildBlogPostJsonLd, buildPostMetadata, toAbsoluteUrl } from "@/lib/seo";
+import {
+	buildBlogPostJsonLd,
+	buildPostMetadata,
+	toAbsoluteUrl,
+} from "@/lib/seo";
 
 interface BlogPostPageProps {
 	params: Promise<{ slug: string }>;
@@ -15,9 +19,7 @@ export async function generateStaticParams() {
 	return slugs.map((slug) => ({ slug }));
 }
 
-export async function generateMetadata({
-	params,
-}: BlogPostPageProps) {
+export async function generateMetadata({ params }: BlogPostPageProps) {
 	const { slug } = await params;
 	const post = getPostBySlug(slug);
 

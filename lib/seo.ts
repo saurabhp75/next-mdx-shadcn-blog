@@ -40,7 +40,8 @@ export function toAbsoluteUrl(pathOrUrl: string) {
 }
 
 function normalizeImage(image?: SeoImage | string) {
-	if (!image) return { ...DEFAULT_OG_IMAGE, url: toAbsoluteUrl(DEFAULT_OG_IMAGE.url) };
+	if (!image)
+		return { ...DEFAULT_OG_IMAGE, url: toAbsoluteUrl(DEFAULT_OG_IMAGE.url) };
 	if (typeof image === "string") {
 		return { ...DEFAULT_OG_IMAGE, url: toAbsoluteUrl(image) };
 	}

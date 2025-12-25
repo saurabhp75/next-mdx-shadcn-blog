@@ -12,9 +12,7 @@ export async function generateStaticParams() {
 	return tags.map((tag) => ({ tag: tag.toLowerCase() }));
 }
 
-export async function generateMetadata({
-	params,
-}: TagPageProps) {
+export async function generateMetadata({ params }: TagPageProps) {
 	const { tag } = await params;
 
 	return buildTagMetadata(tag);
