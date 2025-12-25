@@ -44,12 +44,9 @@ export function PostCard({ post, featured = false }: PostCardProps) {
 							src={post.image}
 							alt={post.title}
 							fill
+							priority={featured}
 							className="object-cover transition-transform duration-500 group-hover:scale-105"
-							sizes={
-								featured
-									? "(max-width: 768px) 100vw, 50vw"
-									: "(max-width: 768px) 100vw, 33vw"
-							}
+							sizes={cardImageSizes}
 						/>
 						<div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 					</div>

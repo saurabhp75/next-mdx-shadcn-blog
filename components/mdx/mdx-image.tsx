@@ -33,8 +33,9 @@ export function MDXImage({
 					width={width}
 					height={height}
 					className="w-full h-auto object-cover"
-					sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
+					sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 800px"
 					loading="lazy"
+					placeholder="empty"
 				/>
 			</div>
 			{alt && (
