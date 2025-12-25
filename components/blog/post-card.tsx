@@ -19,7 +19,7 @@ interface PostCardProps {
 export function PostCard({ post, featured = false }: PostCardProps) {
 	const formattedDate = new Date(post.date).toLocaleDateString("en-US", {
 		year: "numeric",
-		month: "long",
+		month: "short",
 		day: "numeric",
 	});
 

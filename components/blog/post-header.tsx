@@ -13,14 +13,14 @@ interface PostHeaderProps {
 export function PostHeader({ post }: PostHeaderProps) {
 	const formattedDate = new Date(post.date).toLocaleDateString("en-US", {
 		year: "numeric",
-		month: "long",
+		month: "short",
 		day: "numeric",
 	});
 
 	const formattedUpdatedDate = post.updated
 		? new Date(post.updated).toLocaleDateString("en-US", {
 				year: "numeric",
-				month: "long",
+				month: "short",
 				day: "numeric",
 			})
 		: null;
