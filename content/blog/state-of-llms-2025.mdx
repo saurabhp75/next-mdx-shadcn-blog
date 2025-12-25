@@ -30,7 +30,7 @@ This article provides a **technical overview of modern LLM architectures**, thei
 
 At the core of every modern LLM lies the **Transformer architecture**, first introduced in the seminal 2017 paper *[Attention Is All You Need](https://arxiv.org/abs/1706.03762)* by Vaswani et al. While nearly all leading models still rely on Transformers, **how they arrange and activate these components varies dramatically** depending on their intended use case.
 
-![Transformer Architecture](https://jalammar.github.io/images/t/transformer_resideual_layer_norm_3.png)
+![](https://jalammar.github.io/images/t/transformer_resideual_layer_norm_3.png)
 
 *Figure 1: Transformer architecture with encoder-decoder stacks – [The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/)*
 
@@ -65,7 +65,7 @@ Encoder-decoder models split understanding and generation into two distinct phas
 - The **encoder** processes and understands the input using bidirectional attention
 - The **decoder** generates output via **cross-attention** to encoder states
 
-![Encoder-Decoder Architecture](https://jalammar.github.io/images/t/The_transformer_encoders_decoders.png)
+![](https://jalammar.github.io/images/t/The_transformer_encoders_decoders.png)
 
 *Figure 2: Encoder-Decoder architecture showing encoding and decoding components – [The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/)*
 
@@ -97,7 +97,7 @@ Encoder-decoder models split understanding and generation into two distinct phas
 
 MoE models introduce **sparse activation**. Instead of activating every parameter for every request, a **router** selects a small subset of specialized "experts" to handle each query.
 
-![Mixture of Experts Diagram](https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/moe/00_switch_transformer.png)
+![](https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/moe/00_switch_transformer.png)
 
 *Figure 3: Sparse MoE routing mechanism – [Switch Transformers](https://arxiv.org/abs/2101.03961)*
 
