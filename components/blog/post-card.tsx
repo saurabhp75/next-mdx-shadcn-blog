@@ -1,10 +1,8 @@
 import Link from "next/link";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import {
 	Card,
-	CardContent,
 	CardFooter,
 	CardHeader,
 } from "@/components/ui/card";
@@ -33,7 +31,7 @@ export function PostCard({ post, featured = false }: PostCardProps) {
 					featured && "md:flex md:flex-row",
 				)}
 			>
-				{post.image && (
+				{/* {post.image && (
 					<div
 						className={cn(
 							"relative overflow-hidden",
@@ -55,7 +53,7 @@ export function PostCard({ post, featured = false }: PostCardProps) {
 						/>
 						<div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 					</div>
-				)}
+				)} */}
 				<div className={cn("flex flex-col", featured && "md:w-1/2")}>
 					<CardHeader className="space-y-3">
 						<div className="flex flex-wrap items-center gap-2">
@@ -78,11 +76,11 @@ export function PostCard({ post, featured = false }: PostCardProps) {
 							{post.title}
 						</h3>
 					</CardHeader>
-					<CardContent className="flex-1">
+					{/* <CardContent className="flex-1">
 						<p className="text-muted-foreground line-clamp-3 leading-relaxed">
 							{post.description}
 						</p>
-					</CardContent>
+					</CardContent> */}
 					<CardFooter className="flex items-center justify-between pt-4 border-t border-border/50">
 						<div className="flex items-center gap-4 text-sm text-muted-foreground">
 							<span className="flex items-center gap-1.5">
