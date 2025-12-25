@@ -120,7 +120,9 @@ export default function HomePage() {
 						</p>
 						<p className="text-sm text-muted-foreground">
 							Add MDX files to{" "}
-							<code className="bg-muted px-2 py-1 rounded-none">content/blog/</code>{" "}
+							<code className="bg-muted px-2 py-1 rounded-none">
+								content/blog/
+							</code>{" "}
 							to get started.
 						</p>
 					</div>
