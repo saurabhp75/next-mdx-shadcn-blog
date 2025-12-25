@@ -1,9 +1,11 @@
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/$/, "");
+
 export const siteConfig = {
 	name: "code and context",
 	title: "code and context",
 	description:
 		"A technical blog exploring web development, AI, computers, and life in general. Written by Saurabh Prakash.",
-	url: "https://codeandcontext.dev", // Update this with your actual domain
+	url: siteUrl,
 	ogImage: "/og-image.png",
 	author: {
 		name: "Saurabh Prakash",
