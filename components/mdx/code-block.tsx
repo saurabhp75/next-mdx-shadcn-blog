@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, isValidElement, Children } from "react";
+import { useState, useRef, useEffect, isValidElement } from "react";
 import { Check, Copy, Terminal } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -22,22 +22,27 @@ export function CodeBlock({
 	const preRef = useRef<HTMLPreElement>(null);
 
 	useEffect(() => {
-		// Try to get language from data attribute first (from rehype-pretty-code)
-		if (dataLanguage) {
-			setLanguage(dataLanguage);
-			return;
-		}
+		let nextLanguage = "";
 
-		// Fallback: Extract language from code element's className
-		if (preRef.current) {
+		// Prefer data attribute from rehype-pretty-code output
+		if (dataLanguage) {
+			nextLanguage = dataLanguage;
+		} else if (preRef.current) {
+			// Fallback: Extract language from code element's className
 			const codeElement = preRef.current.querySelector("code");
 			if (codeElement) {
 				const langMatch = codeElement.className?.match(/language-(\w+)/);
 				if (langMatch) {
-					setLanguage(langMatch[1]);
+					nextLanguage = langMatch[1];
 				}
 			}
 		}
+
+		if (!nextLanguage) return;
+
+		const rafId = requestAnimationFrame(() => setLanguage(nextLanguage));
+
+		return () => cancelAnimationFrame(rafId);
 	}, [children, dataLanguage]);
 
 	const copyToClipboard = async () => {

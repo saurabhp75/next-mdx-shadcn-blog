@@ -1,7 +1,7 @@
-import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PostGrid } from "@/components/blog/post-grid";
 import { getAllTags, getPostsByTag } from "@/lib/blog";
+import { buildTagMetadata } from "@/lib/seo";
 
 interface TagPageProps {
 	params: Promise<{ tag: string }>;
@@ -14,14 +14,10 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({
 	params,
-}: TagPageProps): Promise<Metadata> {
+}: TagPageProps) {
 	const { tag } = await params;
-	const decodedTag = decodeURIComponent(tag);
 
-	return {
-		title: `Posts tagged "${decodedTag}"`,
-		description: `Browse all blog posts tagged with "${decodedTag}".`,
-	};
+	return buildTagMetadata(tag);
 }
 
 export default async function TagPage({ params }: TagPageProps) {

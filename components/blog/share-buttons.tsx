@@ -20,8 +20,9 @@ export function ShareButtons({ url, title, description }: ShareButtonsProps) {
 	const [copied, setCopied] = useState(false);
 
 	const shareUrl = encodeURIComponent(url);
-	const shareTitle = encodeURIComponent(title);
-	const shareDescription = encodeURIComponent(description || "");
+	const shareText = encodeURIComponent(
+		description ? `${title} — ${description}` : title,
+	);
 
 	const copyToClipboard = async () => {
 		try {
@@ -37,7 +38,7 @@ export function ShareButtons({ url, title, description }: ShareButtonsProps) {
 		{
 			name: "Twitter/X",
 			icon: Twitter,
-			href: `https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareTitle}`,
+			href: `https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}`,
 		},
 		{
 			name: "LinkedIn",

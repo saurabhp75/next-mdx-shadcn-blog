@@ -1,16 +1,13 @@
-import { Metadata } from "next";
 import { PostGrid } from "@/components/blog/post-grid";
 import { getAllPosts } from "@/lib/blog";
 import { siteConfig } from "@/lib/config";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-	title: "Blog",
-	description: `Technical articles and personal reflections about web development, AI, and life from ${siteConfig.author.name}.`,
-	openGraph: {
-		title: "Blog",
-		description: `Technical articles and personal reflections about web development, AI, and life from ${siteConfig.author.name}.`,
-	},
-};
+export const metadata = buildPageMetadata(
+	"Blog",
+	`Technical articles and personal reflections about web development, AI, and life from ${siteConfig.author.name}.`,
+	"/blog",
+);
 
 export default function BlogPage() {
 	const posts = getAllPosts();

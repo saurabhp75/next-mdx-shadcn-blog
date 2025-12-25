@@ -1,10 +1,10 @@
-import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/lib/config";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { buildPageMetadata } from "@/lib/seo";
 import {
 	Github,
 	Linkedin,
@@ -17,10 +17,11 @@ import {
 	ArrowRight,
 } from "lucide-react";
 
-export const metadata: Metadata = {
-	title: "About",
-	description: `Learn more about ${siteConfig.author.name}, the author of ${siteConfig.name}.`,
-};
+export const metadata = buildPageMetadata(
+	"About",
+	`Learn more about ${siteConfig.author.name}, the author of ${siteConfig.name}.`,
+	"/about",
+);
 
 const skills = [
 	{ name: "JavaScript/TypeScript", category: "Languages" },
@@ -31,21 +32,6 @@ const skills = [
 	{ name: "AI/ML", category: "Emerging" },
 	{ name: "PostgreSQL", category: "Database" },
 	{ name: "Tailwind CSS", category: "Styling" },
-];
-
-const timeline = [
-	{
-		year: "Present",
-		title: "Full-Stack Developer & Blogger",
-		description:
-			"Building web applications and sharing knowledge through technical writing.",
-	},
-	{
-		year: "Continuous",
-		title: "Learning & Growing",
-		description:
-			"Always exploring new technologies, especially in AI and web development.",
-	},
 ];
 
 export default function AboutPage() {

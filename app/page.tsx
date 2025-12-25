@@ -4,7 +4,14 @@ import { Badge } from "@/components/ui/badge";
 import { PostGrid } from "@/components/blog/post-grid";
 import { getAllPosts, getAllTags } from "@/lib/blog";
 import { siteConfig } from "@/lib/config";
+import { buildPageMetadata } from "@/lib/seo";
 import { ArrowRight, Code2, Brain, Sparkles } from "lucide-react";
+
+export const metadata = buildPageMetadata(
+	siteConfig.title,
+	siteConfig.description,
+	"/",
+);
 
 export default function HomePage() {
 	const posts = getAllPosts();

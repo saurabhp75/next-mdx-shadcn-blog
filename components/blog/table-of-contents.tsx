@@ -23,7 +23,7 @@ export function TableOfContents() {
 			text: element.textContent || "",
 			level: Number(element.tagName[1]),
 		}));
-		setHeadings(items);
+		const rafId = requestAnimationFrame(() => setHeadings(items));
 
 		const observer = new IntersectionObserver(
 			(entries) => {
@@ -41,7 +41,10 @@ export function TableOfContents() {
 
 		elements.forEach((element) => observer.observe(element));
 
-		return () => observer.disconnect();
+		return () => {
+			cancelAnimationFrame(rafId);
+			observer.disconnect();
+		};
 	}, []);
 
 	if (headings.length === 0) return null;

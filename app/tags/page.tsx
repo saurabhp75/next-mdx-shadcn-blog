@@ -1,13 +1,14 @@
-import { Metadata } from "next";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { getAllTags, getPostsByTag } from "@/lib/blog";
+import { buildPageMetadata } from "@/lib/seo";
 import { Tag } from "lucide-react";
 
-export const metadata: Metadata = {
-	title: "Tags",
-	description: "Browse all blog post tags and topics.",
-};
+export const metadata = buildPageMetadata(
+	"Tags",
+	"Browse all blog post tags and topics.",
+	"/tags",
+);
 
 export default function TagsPage() {
 	const tags = getAllTags();

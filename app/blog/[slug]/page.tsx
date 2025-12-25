@@ -1,11 +1,10 @@
-import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PostHeader } from "@/components/blog/post-header";
 import { TableOfContents } from "@/components/blog/table-of-contents";
 import { ShareButtons } from "@/components/blog/share-buttons";
 import { getAllPostSlugs, getPostBySlug } from "@/lib/blog";
 import { renderMDX } from "@/lib/mdx";
-import { siteConfig } from "@/lib/config";
+import { buildBlogPostJsonLd, buildPostMetadata, toAbsoluteUrl } from "@/lib/seo";
 
 interface BlogPostPageProps {
 	params: Promise<{ slug: string }>;
@@ -18,7 +17,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({
 	params,
-}: BlogPostPageProps): Promise<Metadata> {
+}: BlogPostPageProps) {
 	const { slug } = await params;
 	const post = getPostBySlug(slug);
 
@@ -28,43 +27,7 @@ export async function generateMetadata({
 		};
 	}
 
-	const url = `${siteConfig.url}/blog/${slug}`;
-
-	return {
-		title: post.title,
-		description: post.description,
-		authors: [{ name: post.author }],
-		keywords: post.tags,
-		openGraph: {
-			title: post.title,
-			description: post.description,
-			type: "article",
-			url,
-			publishedTime: post.date,
-			modifiedTime: post.updated || post.date,
-			authors: [post.author],
-			tags: post.tags,
-			images: post.image
-				? [
-						{
-							url: post.image,
-							width: 1200,
-							height: 630,
-							alt: post.title,
-						},
-					]
-				: undefined,
-		},
-		twitter: {
-			card: "summary_large_image",
-			title: post.title,
-			description: post.description,
-			images: post.image ? [post.image] : undefined,
-		},
-		alternates: {
-			canonical: url,
-		},
-	};
+	return buildPostMetadata(post);
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
@@ -78,7 +41,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 	// Render MDX content with syntax highlighting
 	const content = await renderMDX(post.content);
 
-	const postUrl = `${siteConfig.url}/blog/${slug}`;
+	const postUrl = toAbsoluteUrl(`/blog/${slug}`);
 
 	return (
 		<>
@@ -86,35 +49,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 			<script
 				type="application/ld+json"
 				dangerouslySetInnerHTML={{
-					__html: JSON.stringify({
-						"@context": "https://schema.org",
-						"@type": "BlogPosting",
-						headline: post.title,
-						description: post.description,
-						image: post.image,
-						datePublished: post.date,
-						dateModified: post.updated || post.date,
-						author: {
-							"@type": "Person",
-							name: post.author,
-							url: siteConfig.links.github,
-						},
-						publisher: {
-							"@type": "Person",
-							name: siteConfig.author.name,
-							logo: {
-								"@type": "ImageObject",
-								url: `${siteConfig.url}/logo.png`,
-							},
-						},
-						mainEntityOfPage: {
-							"@type": "WebPage",
-							"@id": postUrl,
-						},
-						keywords: post.tags.join(", "),
-						articleSection: post.category,
-						wordCount: post.readingTime.replace(/[^0-9]/g, "") + "00", // Approximate
-					}),
+					__html: JSON.stringify(buildBlogPostJsonLd(post)),
 				}}
 			/>
 

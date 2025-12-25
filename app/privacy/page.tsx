@@ -1,10 +1,11 @@
-import { Metadata } from "next";
 import { siteConfig } from "@/lib/config";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-	title: "Privacy Policy",
-	description: `Privacy policy for ${siteConfig.name}.`,
-};
+export const metadata = buildPageMetadata(
+	"Privacy Policy",
+	`Privacy policy for ${siteConfig.name}.`,
+	"/privacy",
+);
 
 export default function PrivacyPage() {
 	return (
