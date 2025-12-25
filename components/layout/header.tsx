@@ -37,7 +37,7 @@ export function Header() {
 							key={item.href}
 							href={item.href}
 							className={cn(
-								"px-4 py-2 text-sm font-medium rounded-md transition-all duration-200",
+								"px-4 py-2 text-sm font-medium rounded-none transition-all duration-200",
 								"hover:bg-accent hover:text-accent-foreground",
 								"relative after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2",
 								"after:h-0.5 after:w-0 after:bg-primary after:transition-all after:duration-300",
@@ -110,7 +110,7 @@ export function Header() {
 										href={item.href}
 										onClick={() => setIsOpen(false)}
 										className={cn(
-											"text-lg font-medium py-2 px-4 rounded-md transition-colors",
+											"text-lg font-medium py-2 px-4 rounded-none transition-colors",
 											"hover:bg-accent hover:text-accent-foreground",
 											pathname === item.href
 												? "bg-accent text-accent-foreground"
