@@ -54,7 +54,7 @@ export function Callout({ type = "info", title, children }: CalloutProps) {
 	return (
 		<div
 			className={cn(
-				"my-6 flex gap-3 rounded-lg border p-4",
+				"my-6 flex gap-3 rounded-none border p-4",
 				"transition-all duration-200 hover:shadow-md",
 				config.className,
 			)}

@@ -34,7 +34,7 @@ export default function TagsPage() {
 								href={`/tags/${tag.toLowerCase()}`}
 								className="group block"
 							>
-								<div className="flex items-center justify-between p-4 rounded-lg border border-border bg-card hover:border-primary/50 hover:bg-accent/50 transition-all duration-200">
+								<div className="flex items-center justify-between p-4 rounded-none border border-border bg-card hover:border-primary/50 hover:bg-accent/50 transition-all duration-200">
 									<div className="flex items-center gap-3">
 										<Tag className="h-4 w-4 text-primary" />
 										<span className="font-medium group-hover:text-primary transition-colors">
