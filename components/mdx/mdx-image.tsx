@@ -18,11 +18,13 @@ export function MDXImage({
 }: MDXImageProps) {
 	if (!src) return null;
 
+	// Using span with block display instead of figure to avoid hydration error
+	// when MDX wraps images in <p> tags (figure cannot be descendant of p)
 	return (
-		<figure className="my-8">
-			<div
+		<span className="block my-8 not-prose">
+			<span
 				className={cn(
-					"relative overflow-hidden rounded-none border border-border",
+					"block relative overflow-hidden rounded-none border border-border",
 					"transition-all duration-300 hover:shadow-lg",
 					className,
 				)}
@@ -37,12 +39,12 @@ export function MDXImage({
 					loading="lazy"
 					placeholder="empty"
 				/>
-			</div>
+			</span>
 			{alt && (
-				<figcaption className="mt-3 text-center text-sm text-muted-foreground italic">
+				<span className="block mt-3 text-center text-sm text-muted-foreground italic">
 					{alt}
-				</figcaption>
+				</span>
 			)}
-		</figure>
+		</span>
 	);
 }

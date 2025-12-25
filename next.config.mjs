@@ -14,6 +14,22 @@ const nextConfig = {
 				protocol: "https",
 				hostname: "avatars.githubusercontent.com",
 			},
+			{
+				protocol: "https",
+				hostname: "upload.wikimedia.org",
+			},
+			{
+				protocol: "https",
+				hostname: "jalammar.github.io",
+			},
+			{
+				protocol: "https",
+				hostname: "production-media.paperswithcode.com",
+			},
+			{
+				protocol: "https",
+				hostname: "huggingface.co",
+			},
 		],
 	},
 };
