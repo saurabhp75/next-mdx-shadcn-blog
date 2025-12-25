@@ -68,7 +68,7 @@ export function CodeBlock({
 	);
 
 	return (
-		<div className="group relative my-6 overflow-hidden rounded-lg border border-border bg-muted/50">
+		<div className="group relative my-6 overflow-hidden rounded-none border border-border bg-muted/50">
 			{/* Header */}
 			<div className="flex items-center justify-between border-b border-border bg-muted/80 px-4 py-2">
 				<div className="flex items-center gap-2">
@@ -82,7 +82,7 @@ export function CodeBlock({
 				<button
 					onClick={copyToClipboard}
 					className={cn(
-						"flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium",
+						"flex items-center gap-1.5 rounded-none px-2 py-1 text-xs font-medium",
 						"text-muted-foreground hover:text-foreground",
 						"bg-transparent hover:bg-background/50",
 						"transition-all duration-200 ease-out",
