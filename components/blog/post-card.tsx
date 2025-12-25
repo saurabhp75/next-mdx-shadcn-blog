@@ -1,11 +1,7 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import {
-	Card,
-	CardFooter,
-	CardHeader,
-} from "@/components/ui/card";
+import { Card, CardFooter, CardHeader } from "@/components/ui/card";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
 import type { PostMeta } from "@/lib/blog";
 
@@ -54,11 +50,18 @@ export function PostCard({ post, featured = false }: PostCardProps) {
 				<div className={cn("flex flex-col", featured && "md:w-1/2")}>
 					<CardHeader className="space-y-3">
 						<div className="flex flex-wrap items-center gap-2">
-							<Badge variant="secondary" className="text-xs">
+							<Badge
+								variant="secondary"
+								className="text-[11px] bg-primary/6 text-primary border-primary/20"
+							>
 								{post.category}
 							</Badge>
 							{post.tags.slice(0, 2).map((tag) => (
-								<Badge key={tag} variant="outline" className="text-xs">
+								<Badge
+									key={tag}
+									variant="outline"
+									className="text-[11px] border-border/60 text-muted-foreground"
+								>
 									{tag}
 								</Badge>
 							))}
@@ -78,20 +81,20 @@ export function PostCard({ post, featured = false }: PostCardProps) {
 							{post.description}
 						</p>
 					</CardContent> */}
-					<CardFooter className="flex items-center justify-between pt-4 border-t border-border/50">
-						<div className="flex items-center gap-4 text-sm text-muted-foreground">
+					<CardFooter className="flex items-center justify-between pt-4 border-t border-border/50 text-[13px]">
+						<div className="flex items-center gap-4 text-[13px] text-muted-foreground">
 							<span className="flex items-center gap-1.5">
-								<Calendar className="h-3.5 w-3.5" />
+								<Calendar className="h-3 w-3" />
 								{formattedDate}
 							</span>
 							<span className="flex items-center gap-1.5">
-								<Clock className="h-3.5 w-3.5" />
+								<Clock className="h-3 w-3" />
 								{post.readingTime}
 							</span>
 						</div>
-						<span className="flex items-center gap-1 text-sm font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+						<span className="flex items-center gap-1 text-[13px] font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-200">
 							Read more
-							<ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
+							<ArrowRight className="h-3 w-3 transition-transform duration-200 group-hover:translate-x-1" />
 						</span>
 					</CardFooter>
 				</div>
