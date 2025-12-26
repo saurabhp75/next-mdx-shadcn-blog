@@ -38,9 +38,9 @@ export default function HomePage() {
 
 						{/* Heading */}
 						<h1 className="text-4xl md:text-6xl font-extrabold tracking-tight">
-							<span className="text-primary">code</span>
+							<span className="text-primary">Code</span>
 							<span className="text-muted-foreground"> & </span>
-							<span>context</span>
+							<span>Context</span>
 						</h1>
 
 						{/* Description */}

@@ -21,11 +21,11 @@ export function Header() {
 				<Link href="/" className="mr-6 flex items-center space-x-2 group">
 					<span className="font-bold text-xl tracking-tight">
 						<span className="text-primary transition-colors duration-200 group-hover:text-primary/80">
-							code
+							Code
 						</span>
 						<span className="text-muted-foreground"> & </span>
 						<span className="transition-colors duration-200 group-hover:text-primary">
-							context
+							Context
 						</span>
 					</span>
 				</Link>
