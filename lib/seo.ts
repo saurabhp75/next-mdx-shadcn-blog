@@ -105,7 +105,7 @@ export function buildPostMetadata(post: PostMeta): Metadata {
 		title: post.title,
 		description: post.description,
 		url: `/blog/${post.slug}`,
-		image: post.image ?? DEFAULT_OG_IMAGE,
+		image: post.image ?? `/blog/${post.slug}/opengraph-image`,
 		type: "article",
 		publishedTime: post.date,
 		modifiedTime: post.updated || post.date,
