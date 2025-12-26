@@ -62,13 +62,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 					<div className="min-w-0">
 						<PostHeader post={post} />
 
-						{/* Article content */}
-						<article className="prose prose-neutral dark:prose-invert max-w-none prose-headings:scroll-mt-20 prose-a:text-primary prose-pre:bg-transparent prose-pre:p-0">
-							{content}
-						</article>
-
-						{/* Post footer */}
-						<div className="mt-12 pt-8 border-t border-border">
+						{/* Post actions */}
+						<div className="mb-10 pb-6 border-b border-border">
 							<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
 								<ShareButtons
 									url={postUrl}
@@ -91,6 +86,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 								/>
 							</div>
 						</div>
+
+						{/* Article content */}
+						<article className="prose prose-neutral dark:prose-invert max-w-none prose-headings:scroll-mt-20 prose-a:text-primary prose-pre:bg-transparent prose-pre:p-0">
+							{content}
+						</article>
 					</div>
 
 					{/* Sidebar - Table of Contents */}
