@@ -31,6 +31,7 @@ A technical blog built with Next.js 16 (App Router), MDX, Tailwind v4, and shadc
 - **Static Generation** — `generateStaticParams()` for blog slugs
 - **Sitemap** — Auto-generated at `/sitemap.xml`
 - **RSS Feed** — Subscribe at `/rss.xml`
+- **LLM Indexing** — `llms.txt` endpoint at `/llms.txt` (encourages indexing)
 - **Open Graph** — Rich social media previews
 - **Structured Data** — JSON-LD for blog posts
 
