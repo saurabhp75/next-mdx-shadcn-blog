@@ -22,6 +22,7 @@ A technical blog built with Next.js 16 (App Router), MDX, Tailwind v4, and shadc
 - **Code Blocks** — Shiki-powered highlighting + copy button
 - **Table of Contents** — Built from rendered headings
 - **Share Buttons** — Twitter/X, LinkedIn, Facebook, and copy link
+- **Copy MDX** — One-click copy of the full post as a `.mdx` file (frontmatter + body)
 - **Reading Time** — Automatic estimates per post
 - **Tags System** — Organized content with dedicated tag pages
 
@@ -51,6 +52,9 @@ A technical blog built with Next.js 16 (App Router), MDX, Tailwind v4, and shadc
     - Table of contents (`components/blog/table-of-contents.tsx`) scans headings and tracks scroll position
     - Code copy button (`components/mdx/code-block.tsx`)
     - Share buttons (`components/blog/share-buttons.tsx`)
+    - Copy MDX button (`components/blog/copy-markdown-button.tsx`) copies the post as a full `.mdx` file
+
+Note: The “Copy MDX” button reconstructs frontmatter from post metadata and the MDX body from the source file. It intentionally omits the `published` field.
 
 ### Where MDX Is Compiled
 
