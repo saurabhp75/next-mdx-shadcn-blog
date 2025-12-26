@@ -1,4 +1,4 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
 import { getAllPosts, getAllTags } from "@/lib/blog";
 import { siteConfig } from "@/lib/config";
 

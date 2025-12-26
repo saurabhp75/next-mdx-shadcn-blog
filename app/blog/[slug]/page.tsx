@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { PostHeader } from "@/components/blog/post-header";
 import { TableOfContents } from "@/components/blog/table-of-contents";
 import { ShareButtons } from "@/components/blog/share-buttons";
+import { CopyMarkdownButton } from "@/components/blog/copy-markdown-button";
 import { getAllPostSlugs, getPostBySlug } from "@/lib/blog";
 import { renderMDX } from "@/lib/mdx";
 import {
@@ -73,6 +74,20 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 									url={postUrl}
 									title={post.title}
 									description={post.description}
+								/>
+								<CopyMarkdownButton
+									slug={post.slug}
+									content={post.content}
+									meta={{
+										title: post.title,
+										description: post.description,
+										date: post.date,
+										updated: post.updated,
+										author: post.author,
+										image: post.image,
+										tags: post.tags,
+										category: post.category,
+									}}
 								/>
 							</div>
 						</div>
