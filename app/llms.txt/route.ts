@@ -2,7 +2,8 @@ import { siteConfig } from "@/lib/config";
 
 function getBaseUrl() {
 	const configured = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
-	if (configured && !/localhost|127\.0\.0\.1/i.test(configured)) return configured;
+	if (configured && !/localhost|127\.0\.0\.1/i.test(configured))
+		return configured;
 
 	// Placeholder for non-production deployments.
 	return "https://example.com";
@@ -54,7 +55,8 @@ export async function GET() {
 	return new Response(text, {
 		headers: {
 			"Content-Type": "text/plain; charset=utf-8",
-			"Cache-Control": "public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400",
+			"Cache-Control":
+				"public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400",
 		},
 	});
 }
