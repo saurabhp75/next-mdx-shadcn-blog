@@ -12,7 +12,7 @@ export const siteConfig = {
 	author: {
 		name: "Saurabh Prakash",
 		bio: "Full-stack developer passionate about web technologies, AI, and building things that matter.",
-		avatar: "/avatar.jpg",
+		avatar: "/images/saurabh.webp",
 		email: "saurabh@example.com", // Update with actual email
 	},
 	links: {
