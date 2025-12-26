@@ -42,7 +42,7 @@ export default function AboutPage() {
 				<div className="grid md:grid-cols-[300px_1fr] gap-10 items-start">
 					{/* Profile Image */}
 					<div className="relative mx-auto md:mx-0">
-						<div className="relative w-64 h-64 md:w-full md:h-auto md:aspect-square rounded-2xl overflow-hidden border-4 border-primary/20">
+						<div className="relative w-64 h-64 md:w-full md:h-auto md:aspect-square rounded-none overflow-hidden border-4 border-primary/20">
 							<Image
 								src={siteConfig.author.avatar || "/avatar.jpg"}
 								alt={siteConfig.author.name}
