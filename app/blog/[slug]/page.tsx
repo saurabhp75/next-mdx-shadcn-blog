@@ -15,6 +15,10 @@ interface BlogPostPageProps {
 	params: Promise<{ slug: string }>;
 }
 
+export const dynamic = "force-static";
+export const dynamicParams = false;
+export const revalidate = false;
+
 export async function generateStaticParams() {
 	const slugs = getAllPostSlugs();
 	return slugs.map((slug) => ({ slug }));

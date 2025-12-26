@@ -101,11 +101,18 @@ export function buildMetadata(options: BuildMetadataOptions = {}): Metadata {
 }
 
 export function buildPostMetadata(post: PostMeta): Metadata {
+	const generatedOgImage: SeoImage = {
+		url: `/blog/${post.slug}/opengraph-image`,
+		width: 1200,
+		height: 630,
+		alt: post.title,
+	};
+
 	return buildMetadata({
 		title: post.title,
 		description: post.description,
 		url: `/blog/${post.slug}`,
-		image: post.image ?? `/blog/${post.slug}/opengraph-image`,
+		image: post.image ?? generatedOgImage,
 		type: "article",
 		publishedTime: post.date,
 		modifiedTime: post.updated || post.date,
@@ -147,7 +154,9 @@ function readingTimeToWordCount(readingTime: string) {
 
 export function buildBlogPostJsonLd(post: PostMeta) {
 	const url = toAbsoluteUrl(`/blog/${post.slug}`);
-	const imageUrl = toAbsoluteUrl(post.image ?? DEFAULT_OG_IMAGE.url);
+	const imageUrl = toAbsoluteUrl(
+		post.image ?? `/blog/${post.slug}/opengraph-image`,
+	);
 	const wordCount = readingTimeToWordCount(post.readingTime);
 
 	return {
