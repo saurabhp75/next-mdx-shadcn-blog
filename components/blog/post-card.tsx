@@ -84,11 +84,11 @@ export function PostCard({ post, featured = false }: PostCardProps) {
 					<CardFooter className="flex items-center justify-between pt-4 border-t border-border/50 text-[13px]">
 						<div className="flex items-center gap-4 text-[13px] text-muted-foreground">
 							<span className="flex items-center gap-1.5">
-								<Calendar className="h-3 w-3" />
+								{/* <Calendar className="h-3 w-3" /> */}
 								{formattedDate}
 							</span>
 							<span className="flex items-center gap-1.5">
-								<Clock className="h-3 w-3" />
+								{/* <Clock className="h-3 w-3" /> */}
 								{post.readingTime}
 							</span>
 						</div>

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Calendar, Clock, Tag } from "lucide-react";
+import { Tag } from "lucide-react";
 import { siteConfig } from "@/lib/config";
 import type { PostMeta } from "@/lib/blog";
 import Link from "next/link";
@@ -56,7 +56,7 @@ export function PostHeader({ post }: PostHeaderProps) {
 			</p>
 
 			{/* Author and meta info */}
-			<div className="flex flex-wrap items-center gap-6 pt-4 border-t border-border">
+			<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 pt-4 border-t border-border">
 				<div className="flex items-center gap-3">
 					<Avatar className="h-10 w-10 ring-2 ring-primary/20">
 						<AvatarImage src={siteConfig.author.avatar} alt={post.author} />
@@ -73,9 +73,9 @@ export function PostHeader({ post }: PostHeaderProps) {
 					</div>
 				</div>
 
-				<div className="flex items-center gap-4 text-sm text-muted-foreground">
+				<div className="flex flex-wrap sm:flex-nowrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground sm:justify-end">
 					<span className="flex items-center gap-1.5">
-						<Calendar className="h-4 w-4" />
+						{/* <Calendar className="h-4 w-4" /> */}
 						{formattedDate}
 					</span>
 					{formattedUpdatedDate && (
@@ -84,7 +84,7 @@ export function PostHeader({ post }: PostHeaderProps) {
 						</span>
 					)}
 					<span className="flex items-center gap-1.5">
-						<Clock className="h-4 w-4" />
+						{/* <Clock className="h-4 w-4" /> */}
 						{post.readingTime}
 					</span>
 				</div>
