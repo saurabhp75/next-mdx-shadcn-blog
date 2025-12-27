@@ -108,11 +108,11 @@ export function CopyMarkdownButton({
 		}
 	};
 
-	const label = copied ? "Copied" : "Copy MDX";
+	const label = copied ? "Copied" : "Copy post";
 	const Icon = copied ? Check : Copy;
 	const tooltipText = error
 		? `Copy failed: ${error}`
-		: `Copies ${file.filename} (frontmatter + body)`;
+		: `Copies ${file.filename}`;
 
 	return (
 		<Tooltip>
@@ -128,7 +128,7 @@ export function CopyMarkdownButton({
 				}
 			>
 				<span className="inline-flex items-center">
-					<FileText className="mr-2 h-4 w-4 text-muted-foreground" />
+					{/* <FileText className="mr-2 h-4 w-4 text-muted-foreground" /> */}
 					<Icon
 						className={copied ? "mr-2 h-4 w-4 text-green-500" : "mr-2 h-4 w-4"}
 					/>
