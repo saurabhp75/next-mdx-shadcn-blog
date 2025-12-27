@@ -6,14 +6,18 @@ import { Footer } from "@/components/layout/footer";
 import { siteConfig } from "@/lib/config";
 import "./globals.css";
 
-const jetbrainsSans = JetBrains_Mono({
-	variable: "--font-sans",
-	subsets: ["latin"],
-});
-
 const jetbrainsMono = JetBrains_Mono({
-	variable: "--font-jetbrains-mono",
 	subsets: ["latin"],
+	display: "swap",
+	fallback: [
+		"ui-monospace",
+		"SFMono-Regular",
+		"Menlo",
+		"Monaco",
+		"Consolas",
+		"Liberation Mono",
+		"monospace",
+	],
 });
 
 export const viewport: Viewport = {
@@ -83,7 +87,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" className={jetbrainsSans.variable} suppressHydrationWarning>
+		<html lang="en" suppressHydrationWarning>
 			<head>
 				{/* AI/LLM crawler optimization */}
 				<meta
@@ -93,7 +97,7 @@ export default function RootLayout({
 				<link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 			</head>
 			<body
-				className={`${jetbrainsSans.variable} ${jetbrainsMono.variable} antialiased min-h-screen flex flex-col`}
+				className={`${jetbrainsMono.className} antialiased min-h-screen flex flex-col`}
 			>
 				<ThemeProvider
 					attribute="class"
